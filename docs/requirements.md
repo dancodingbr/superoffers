@@ -70,9 +70,9 @@ What are the features required?
 
 Project Artifacts
 
-| FILE |  LINK |
-| ------ | ------ |
-| Architecture | [architecture.png](https://github.com/dancodingbr/superoffers/tree/main/docs/architecture) |
-| CI/CD Pipeline | [ci-cd-pipeline.png](https://github.com/dancodingbr/superoffers/tree/main/docs/devops) |
+|  DOCS |
+| ------ |
+| [Architecture](https://github.com/dancodingbr/superoffers/tree/main/docs/architecture) |
+| [CI/CD Pipeline](https://github.com/dancodingbr/superoffers/tree/main/docs/devops) |
 
 

@@ -41,11 +41,11 @@ The main features that's application is going to provide are:
 
 - In API Gateway, it'll be used the HTTP API product, to create the RESTFul API and to integrate with Lambda functions. 
 
-- Each lambda function will be responsible for compute the requests on backend tier. The Offers service will be composed by basic CRUD operations over offers records (which the supermarket manager should control) and to handle "View Day Offers" resources to supermarket customers. 
+- Each lambda function will be responsible for compute the requests on backend tier. The Offers service will be composed by basic CRUD operations over offers records (which the supermarket manager should control) and to handle "View Day Offers" resources to supermarket customers. More details about the features proposed in this application can be found [here](https://github.com/dancodingbr/superoffers/blob/main/docs/requirements.md).
 
 - An IAM role is attached to each lambda function, providing only the necessary permissions for the Offers service tasks that will be executed, like read or write data in the DynamoDB table.
 
-- DynamoDb was choosed to store and retrieve the offer records. In this architeture proposed, this choice was made for study motivations, but a relational database solution could be applied as well, like RDS or Aurora.
+- DynamoDB was choosed to store and retrieve the offer records. In this architecture proposed, this choice was made for study motivations, but a relational database solution could be applied as well, like RDS or Aurora.
 
 - Optionally, DAX can be enabled to improve the application performance at scale, caching the day offers results if it will occurs an overhead of read requests made by the supermarket customers.
 
@@ -55,7 +55,7 @@ The main features that's application is going to provide are:
 
 #### Notes
 
-- In their local machines environment, developers will make code changes locally in the project using SAM CLI, mainly for purpose of test lambda functions, to avoid of incurring charges.
+- In their local machines environment, developers will make code changes in the project using SAM CLI, mainly for purpose of test lambda functions and to avoid of incurring charges.
 
 - Then, developers will commit changes to the Github's project repository. At this point, a Github webhook is invoking to start automatically the CI/CD process and uploads the source code package to a S3 bucket.
 
