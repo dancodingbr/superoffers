@@ -1,0 +1,5 @@
+/.metadata/
+*.glade~
+node_modules
+*.bak
+*.DS_Store
