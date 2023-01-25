@@ -72,7 +72,7 @@ Project Artifacts
 
 | FILE |  LINK |
 | ------ | ------ |
-| Architecture | [architecture.png](https://github.com/dancodingbr/superoffers/tree/main/docs/architecture/architecture.png) |
-| CI/CD Pipeline | [ci-cd-pipeline.png](https://github.com/dancodingbr/superoffers/tree/main/docs/devops/ci-cd-pipeline.png) |
+| Architecture | [architecture.png](https://github.com/dancodingbr/superoffers/tree/main/docs/architecture) |
+| CI/CD Pipeline | [ci-cd-pipeline.png](https://github.com/dancodingbr/superoffers/tree/main/docs/devops) |
 
 
