@@ -3,5 +3,3 @@
 node_modules
 *.bak
 *.DS_Store
-/.idea/
-/.aws-sam/
