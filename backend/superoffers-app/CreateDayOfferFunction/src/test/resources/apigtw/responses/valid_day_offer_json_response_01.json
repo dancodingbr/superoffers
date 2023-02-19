@@ -1,0 +1,8 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "X-Custom-Header": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": "{    \"id\": 1,\n      \"productName\": \"Lime\",\n      \"price\": 0.49,\n      \"quantityAvailable\": 1000.0,\n      \"productUnit\": \"PKG\",\n      \"offerExpirationDate\": \"2022-12-31\",\n      \"supermarketName\": \"Bob's Supermarket\",\n      \"userId\": 1\n}"
+}
