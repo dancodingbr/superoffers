@@ -2,10 +2,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>superoffers</groupId>
-    <artifactId>create-day-offer</artifactId>
+    <artifactId>update-day-offer</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>Create Day Offer Function</name>
+    <name>Update Day Offer Function</name>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

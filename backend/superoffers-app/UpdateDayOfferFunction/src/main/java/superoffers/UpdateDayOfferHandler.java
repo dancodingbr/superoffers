@@ -9,7 +9,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CreateDayOfferHandler
+public class UpdateDayOfferHandler
     implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
   @Override
@@ -20,14 +20,12 @@ public class CreateDayOfferHandler
     response.setHeaders(headers);
 
     try {
-      // Parse the input body
       ObjectMapper objectMapper = new ObjectMapper();
       Dummy dummy = objectMapper.readValue(input.getBody(), Dummy.class);
 
-      // Build the response body
       String responseBody = objectMapper.writeValueAsString(dummy);
       response.setBody(responseBody);
-      response.setStatusCode(201);
+      response.setStatusCode(200);
 
     } catch (Exception e) {
       response.setStatusCode(500);

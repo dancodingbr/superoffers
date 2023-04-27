@@ -7,27 +7,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-public class CreateDayOfferHandlerTest {
+public class UpdateDayOfferHandlerTest {
 
   @Test
-  public void postDayOffer() {
-    CreateDayOfferHandler createDayOfferHandler = new CreateDayOfferHandler();
+  public void putDayOffer() {
+    UpdateDayOfferHandler updateDayOfferHandler = new UpdateDayOfferHandler();
 
-    // create a new APIGatewayProxyRequestEvent object with a POST method and
-    // request body
     APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent();
-    request.setHttpMethod("POST");
-    request.setBody("{\"message\":\"create day offer\"}");
+    request.setHttpMethod("PUT");
+    request.setBody("{\"message\":\"update day offer\"}");
 
-    // call the handleRequest method with the request object
-    APIGatewayProxyResponseEvent response = createDayOfferHandler.handleRequest(request, null);
-
-    assertEquals(201, response.getStatusCode().intValue());
+    APIGatewayProxyResponseEvent response = updateDayOfferHandler.handleRequest(request, null);
+    assertEquals(200, response.getStatusCode().intValue());
     assertEquals("application/json", response.getHeaders().get("Content-Type"));
     String content = response.getBody();
     assertNotNull(content);
     assertTrue(content.contains("\"message\""));
-    assertTrue(content.contains("\"create day offer\""));
+    assertTrue(content.contains("\"update day offer\""));
   }
 
 }
