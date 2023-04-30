@@ -5,3 +5,4 @@
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/DayOfferImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/entities/DayOffer.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/usecases/CreateDayOfferUseCase.java
+/Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/util/context/TestContext.java

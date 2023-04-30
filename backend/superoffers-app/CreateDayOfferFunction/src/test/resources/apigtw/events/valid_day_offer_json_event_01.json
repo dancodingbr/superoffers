@@ -1,7 +1,7 @@
 {
   "version": "2.0",
   "routeKey": "$default",
-  "rawPath": "/path/to/resource",
+  "rawPath": "/day-offers",
   "rawQueryString": "parameter1=value1&parameter1=value2&parameter2=value",
   "cookies": [
     "cookie1",
@@ -46,7 +46,7 @@
     "domainPrefix": "id",
     "http": {
       "method": "POST",
-      "path": "/path/to/resource",
+      "path": "/day-offers",
       "protocol": "HTTP/1.1",
       "sourceIp": "192.168.0.1/32",
       "userAgent": "agent"

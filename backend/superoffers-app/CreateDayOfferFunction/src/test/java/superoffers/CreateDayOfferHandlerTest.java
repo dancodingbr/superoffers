@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import superoffers.core.entities.DayOffer;
 import superoffers.impl.DayOfferImpl;
 import superoffers.util.jsonserializers.InstantAdapter;
+import superoffers.util.context.TestContext;
 
 import java.time.Instant;
 

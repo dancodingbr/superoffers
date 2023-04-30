@@ -5,3 +5,4 @@ superoffers/core/entities/DayOffer.class
 superoffers/util/jsonserializers/InstantAdapter.class
 superoffers/impl/DayOfferImpl.class
 superoffers/impl/CreateDayOfferUseCaseImpl.class
+superoffers/util/context/TestContext.class
