@@ -32,7 +32,7 @@ public class CreateDayOfferUseCaseImplTest {
     private DynamoDbTable<DayOfferImpl> dayOfferTableMock;
 
     @Test
-    public void it_should_creates_the_instance_when_calls_constructor() {
+    public void it_should_create_the_instance_when_calls_constructor() {
         // arrange
         CreateDayOfferUseCase actualInstance = null;
 
@@ -44,7 +44,7 @@ public class CreateDayOfferUseCaseImplTest {
     }
 
     @Test
-    public void it_should_returns_nothing_when_stores_a_day_offer_successfully() {
+    public void it_should_return_nothing_when_stores_a_day_offer_successfully() {
         // arrange
         CreateDayOfferUseCase createDayOfferUseCase = new CreateDayOfferUseCaseImpl(enhancedClientMock);
         LocalDate localDate = LocalDate.parse("2022-12-31");

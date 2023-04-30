@@ -1,3 +1,4 @@
-superoffers/impl/RetrieveDayOfferUseCaseImplTest.class
 superoffers/util/jsonserializers/InstantAdapterTest.class
+superoffers/impl/RetrieveDayOfferUseCaseImplTest.class
+superoffers/impl/EditDayOfferUseCaseImplTest.class
 superoffers/impl/CreateDayOfferUseCaseImplTest.class

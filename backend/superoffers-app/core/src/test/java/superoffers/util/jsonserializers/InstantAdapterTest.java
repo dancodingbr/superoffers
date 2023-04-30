@@ -32,7 +32,7 @@ public class InstantAdapterTest {
     }
 
     @Test
-    public void it_should_throws_exception_given_an_invalid_date_string_format() {
+    public void it_should_throw_an_exception_given_an_invalid_date_string_format() {
 
         Exception exception = Assert.assertThrows(DateTimeParseException.class, () -> {
 

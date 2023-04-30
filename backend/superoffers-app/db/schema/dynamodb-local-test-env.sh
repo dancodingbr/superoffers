@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Running dynamodb locally for testing using docker
+#
 # Usage: 
 #
 # 1. On terminal one, run: 

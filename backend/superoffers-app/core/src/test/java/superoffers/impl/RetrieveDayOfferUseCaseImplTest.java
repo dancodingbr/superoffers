@@ -31,7 +31,7 @@ public class RetrieveDayOfferUseCaseImplTest {
     private DayOfferImpl expectedDayOfferMock;
 
     @Test
-    public void it_should_creates_the_instance_when_calls_constructor() {
+    public void it_should_create_the_instance_when_calls_constructor() {
         // arrange
         RetrieveDayOfferUseCase actualInstance = null;
 
@@ -43,7 +43,7 @@ public class RetrieveDayOfferUseCaseImplTest {
     }
 
     @Test
-    public void it_should_returns_a_day_offer_given_an_id() {
+    public void it_should_return_a_day_offer_given_an_id() {
         // arrange
         RetrieveDayOfferUseCase retrieveDayOfferUseCase = new RetrieveDayOfferUseCaseImpl(enhancedClientMock);
         UUID id = UUID.fromString("2baf9517-ad43-4893-848d-7a7d43103839");

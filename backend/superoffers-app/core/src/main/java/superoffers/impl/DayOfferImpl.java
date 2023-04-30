@@ -2,7 +2,6 @@ package superoffers.impl;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 import superoffers.core.entities.DayOffer;
 
 import java.time.Instant;
@@ -41,20 +40,12 @@ public class DayOfferImpl implements DayOffer {
         return this.id;
     }
 
-    /*
-        @Override
-        @DynamoDbPartitionKey
-        public Long getId() {
-            return this.id != null ? this.id.getMostSignificantBits() : null;
-        }
-    */
     @Override
     public String getProductName() {
         return this.productName;
     }
 
     @Override
-    @DynamoDbSortKey
     public Double getPrice() {
         return this.price;
     }
