@@ -1,40 +1,54 @@
 package superoffers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import superoffers.core.entities.DayOffer;
+import superoffers.impl.DayOfferImpl;
+import superoffers.core.usecases.CreateDayOfferUseCase;
+import superoffers.impl.CreateDayOfferUseCaseImpl;
+import superoffers.core.usecases.RetrieveDayOfferUseCase;
+import superoffers.impl.RetrieveDayOfferUseCaseImpl;
+import superoffers.util.jsonserializers.InstantAdapter;
+
+import java.net.URI;
+import java.time.Instant;
 
 public class CreateDayOfferHandler
     implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
+      private CreateDayOfferUseCase createDayOfferUseCase = null;
+      private RetrieveDayOfferUseCase retrieveDayOfferUseCase = null;
+  
+      public CreateDayOfferHandler() {
+          DynamoDbClient ddb = DynamoDbClient.builder()
+                  .region(Region.US_EAST_1)
+                  .endpointOverride(URI.create("http://localhost:8000"))
+                  .build();
+          DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                  .dynamoDbClient(ddb)
+                  .build();
+          createDayOfferUseCase = new CreateDayOfferUseCaseImpl(enhancedClient);
+          retrieveDayOfferUseCase = new RetrieveDayOfferUseCaseImpl(enhancedClient);
+      }
+  
   @Override
-  public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-    APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-    Map<String, String> headers = new HashMap<>();
-    headers.put("Content-Type", "application/json");
-    response.setHeaders(headers);
-
-    try {
-      // Parse the input body
-      ObjectMapper objectMapper = new ObjectMapper();
-      Dummy dummy = objectMapper.readValue(input.getBody(), Dummy.class);
-
-      // Build the response body
-      String responseBody = objectMapper.writeValueAsString(dummy);
-      response.setBody(responseBody);
-      response.setStatusCode(201);
-
-    } catch (Exception e) {
-      response.setStatusCode(500);
-      response.setBody("{\"message\": \"Internal server error\"}");
-    }
-
-    return response;
+  public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
+    Gson gson = new GsonBuilder()
+      .setDateFormat("yyyy-MM-dd")
+      .serializeNulls()
+      .registerTypeAdapter(Instant.class, new InstantAdapter())
+      .create();
+    DayOffer dayOfferPayload = gson.fromJson(apiGatewayProxyRequestEvent.getBody(), DayOfferImpl.class);
+    this.createDayOfferUseCase.store(dayOfferPayload);
+    DayOffer dayOfferCreated = this.retrieveDayOfferUseCase.findById(dayOfferPayload.getId());
+    return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(gson.toJson(dayOfferCreated));
   }
 
 }

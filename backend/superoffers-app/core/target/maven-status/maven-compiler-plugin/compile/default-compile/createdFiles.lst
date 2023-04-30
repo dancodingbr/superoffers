@@ -1,0 +1,7 @@
+superoffers/core/usecases/RetrieveDayOfferUseCase.class
+superoffers/core/usecases/CreateDayOfferUseCase.class
+superoffers/impl/RetrieveDayOfferUseCaseImpl.class
+superoffers/core/entities/DayOffer.class
+superoffers/util/jsonserializers/InstantAdapter.class
+superoffers/impl/DayOfferImpl.class
+superoffers/impl/CreateDayOfferUseCaseImpl.class
