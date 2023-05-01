@@ -2,9 +2,11 @@
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/RetrieveDayOfferUseCaseImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/usecases/EditDayOfferUseCase.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/util/jsonserializers/InstantAdapter.java
+/Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/RemoveDayOfferUseCaseImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/CreateDayOfferUseCaseImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/DayOfferImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/entities/DayOffer.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/impl/EditDayOfferUseCaseImpl.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/usecases/CreateDayOfferUseCase.java
 /Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/util/context/TestContext.java
+/Users/daniel/superoffers/backend/superoffers-app/core/src/main/java/superoffers/core/usecases/RemoveDayOfferUseCase.java

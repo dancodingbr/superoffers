@@ -20,7 +20,7 @@ public class RetrieveDayOfferHandlerTest {
 
   @ParameterizedTest
   @HandlerParams(events = @Events(events = {@Event("apigtw/events/valid_day_offer_json_event_01.json"), @Event("apigtw/events/valid_day_offer_json_event_02.json"),}, type = APIGatewayProxyRequestEvent.class), responses = @Responses(responses = {@Response("apigtw/responses/valid_day_offer_json_response_01.json"), @Response("apigtw/responses/valid_day_offer_json_response_02.json")}, type = APIGatewayProxyResponseEvent.class))
-  public void it_should_return_200_response_when_get_a_valid_day_offer_json_object(APIGatewayProxyRequestEvent event, APIGatewayProxyResponseEvent expectedResponse) {
+  public void it_should_return_200_response_when_call_get_a_day_offer(APIGatewayProxyRequestEvent event, APIGatewayProxyResponseEvent expectedResponse) {
     // given
     RetrieveDayOfferHandler handler = new RetrieveDayOfferHandler();
     TestContext context = new TestContext();

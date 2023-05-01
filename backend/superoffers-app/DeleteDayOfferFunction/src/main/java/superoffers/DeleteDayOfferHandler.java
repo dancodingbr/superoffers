@@ -1,37 +1,50 @@
 package superoffers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import superoffers.core.entities.DayOffer;
+import superoffers.core.usecases.RemoveDayOfferUseCase;
+import superoffers.impl.RemoveDayOfferUseCaseImpl;
+import superoffers.util.jsonserializers.InstantAdapter;
+
+import java.net.URI;
+import java.time.Instant;
+
+import java.util.UUID;
 
 public class DeleteDayOfferHandler
         implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
+    private RemoveDayOfferUseCase removeDayOfferUseCase = null;
+  
+    public DeleteDayOfferHandler() {
+        DynamoDbClient ddb = DynamoDbClient.builder()
+                .region(Region.US_EAST_1)
+                .endpointOverride(URI.create("http://localhost:8000"))
+                .build();
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(ddb)
+                .build();
+        removeDayOfferUseCase = new RemoveDayOfferUseCaseImpl(enhancedClient);
+    }
+
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        response.setHeaders(headers);
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Dummy dummy = objectMapper.readValue("{ \"message\": \"delete day offer\" }", Dummy.class);
-
-            String responseBody = objectMapper.writeValueAsString(dummy);
-            response.setBody(responseBody);
-            response.setStatusCode(200);
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setBody("{\"message\": \"Internal server error\"}");
-        }
-
-        return response;
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
+        UUID dayOfferId = UUID.fromString(apiGatewayProxyRequestEvent.getPathParameters().get("id"));
+        DayOffer dayOfferDeleted = this.removeDayOfferUseCase.delete(dayOfferId);
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd")
+            .serializeNulls()
+            .registerTypeAdapter(Instant.class, new InstantAdapter())
+            .create();
+        return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(gson.toJson(dayOfferDeleted));
     }
 
 }
