@@ -13,8 +13,8 @@ import superoffers.core.entities.DayOffer;
 import superoffers.impl.DayOfferImpl;
 import superoffers.core.usecases.CreateDayOfferUseCase;
 import superoffers.impl.CreateDayOfferUseCaseImpl;
-import superoffers.core.usecases.RetrieveDayOfferUseCase;
-import superoffers.impl.RetrieveDayOfferUseCaseImpl;
+import superoffers.core.usecases.ViewDayOfferUseCase;
+import superoffers.impl.ViewDayOfferUseCaseImpl;
 import superoffers.util.jsonserializers.InstantAdapter;
 
 import java.net.URI;
@@ -24,7 +24,7 @@ public class CreateDayOfferHandler
     implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
       private CreateDayOfferUseCase createDayOfferUseCase = null;
-      private RetrieveDayOfferUseCase retrieveDayOfferUseCase = null;
+      private ViewDayOfferUseCase viewDayOfferUseCase = null;
   
       public CreateDayOfferHandler() {
           DynamoDbClient ddb = DynamoDbClient.builder()
@@ -35,7 +35,7 @@ public class CreateDayOfferHandler
                   .dynamoDbClient(ddb)
                   .build();
           createDayOfferUseCase = new CreateDayOfferUseCaseImpl(enhancedClient);
-          retrieveDayOfferUseCase = new RetrieveDayOfferUseCaseImpl(enhancedClient);
+          viewDayOfferUseCase = new ViewDayOfferUseCaseImpl(enhancedClient);
       }
   
   @Override
@@ -47,7 +47,7 @@ public class CreateDayOfferHandler
       .create();
     DayOffer dayOfferPayload = gson.fromJson(apiGatewayProxyRequestEvent.getBody(), DayOfferImpl.class);
     this.createDayOfferUseCase.store(dayOfferPayload);
-    DayOffer dayOfferCreated = this.retrieveDayOfferUseCase.findById(dayOfferPayload.getId());
+    DayOffer dayOfferCreated = this.viewDayOfferUseCase.findById(dayOfferPayload.getId());
     return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(gson.toJson(dayOfferCreated));
   }
 

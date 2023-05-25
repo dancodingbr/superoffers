@@ -2,6 +2,7 @@ package superoffers.impl;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 import superoffers.core.entities.DayOffer;
 
 import java.time.Instant;
@@ -41,6 +42,7 @@ public class DayOfferImpl implements DayOffer {
     }
 
     @Override
+    @DynamoDbSecondaryPartitionKey(indexNames = {"productName-index"})
     public String getProductName() {
         return this.productName;
     }
@@ -66,6 +68,7 @@ public class DayOfferImpl implements DayOffer {
     }
 
     @Override
+    @DynamoDbSecondaryPartitionKey(indexNames = {"supermarketName-index"})
     public String getSupermarketName() {
         return this.supermarketName;
     }

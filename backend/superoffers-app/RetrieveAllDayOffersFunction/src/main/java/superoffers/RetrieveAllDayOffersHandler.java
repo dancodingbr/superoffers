@@ -1,50 +1,61 @@
 package superoffers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import superoffers.core.entities.DayOffer;
+import superoffers.core.usecases.ViewDayOfferUseCase;
+import superoffers.impl.ViewDayOfferUseCaseImpl;
+import superoffers.util.jsonserializers.InstantAdapter;
+
+import java.net.URI;
+import java.time.Instant;
+
+import java.util.List;
+import java.util.UUID;
 
 public class RetrieveAllDayOffersHandler
         implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
+    private ViewDayOfferUseCase viewDayOfferUseCase = null;
+  
+    public RetrieveAllDayOffersHandler() {
+        DynamoDbClient ddb = DynamoDbClient.builder()
+                .region(Region.US_EAST_1)
+                .endpointOverride(URI.create("http://localhost:8000"))
+                .build();
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(ddb)
+                .build();
+        viewDayOfferUseCase = new ViewDayOfferUseCaseImpl(enhancedClient);
+    }
+
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        response.setHeaders(headers);
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
+        List<DayOffer> dayOfferListRetrieved = null;
 
-        String productName = null;
-        if (input.getQueryStringParameters() != null && input.getQueryStringParameters().containsKey("productName")) {
-            productName = input.getQueryStringParameters().get("productName");
+        String productName = null, supermarketName = null;
+        if (apiGatewayProxyRequestEvent.getQueryStringParameters() != null && apiGatewayProxyRequestEvent.getQueryStringParameters().containsKey("productName")) {
+            productName = apiGatewayProxyRequestEvent.getQueryStringParameters().get("productName");
+            dayOfferListRetrieved = this.viewDayOfferUseCase.findAllByProductName(productName);
+        }
+        else if (apiGatewayProxyRequestEvent.getQueryStringParameters() != null && apiGatewayProxyRequestEvent.getQueryStringParameters().containsKey("supermarketName")) {
+            supermarketName = apiGatewayProxyRequestEvent.getQueryStringParameters().get("supermarketName");
+            dayOfferListRetrieved = this.viewDayOfferUseCase.findAllBySupermarketName(supermarketName);
         }
 
-        String supermarketName = null;
-        if (input.getQueryStringParameters() != null
-                && input.getQueryStringParameters().containsKey("supermarketName")) {
-            supermarketName = input.getQueryStringParameters().get("supermarketName");
-        }
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String output = String.format("{ \"message\": \"retrieve all day offers (productName: %s, supermarketName: %s) \" }",
-                    productName, supermarketName);
-            Dummy dummy = objectMapper.readValue(output, Dummy.class);
-
-            String responseBody = objectMapper.writeValueAsString(dummy);
-            response.setBody(responseBody);
-            response.setStatusCode(200);
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setBody("{\"message\": \"Internal server error\"}");
-        }
-
-        return response;
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd")
+            .serializeNulls()
+            .registerTypeAdapter(Instant.class, new InstantAdapter())
+            .create();
+        return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(gson.toJson(dayOfferListRetrieved));
     }
 
 }

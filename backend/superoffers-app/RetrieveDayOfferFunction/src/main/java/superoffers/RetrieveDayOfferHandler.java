@@ -10,8 +10,8 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import superoffers.core.entities.DayOffer;
-import superoffers.core.usecases.RetrieveDayOfferUseCase;
-import superoffers.impl.RetrieveDayOfferUseCaseImpl;
+import superoffers.core.usecases.ViewDayOfferUseCase;
+import superoffers.impl.ViewDayOfferUseCaseImpl;
 import superoffers.util.jsonserializers.InstantAdapter;
 
 import java.net.URI;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class RetrieveDayOfferHandler
         implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    private RetrieveDayOfferUseCase retrieveDayOfferUseCase = null;
+    private ViewDayOfferUseCase viewDayOfferUseCase = null;
   
     public RetrieveDayOfferHandler() {
         DynamoDbClient ddb = DynamoDbClient.builder()
@@ -32,13 +32,13 @@ public class RetrieveDayOfferHandler
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(ddb)
                 .build();
-        retrieveDayOfferUseCase = new RetrieveDayOfferUseCaseImpl(enhancedClient);
+        viewDayOfferUseCase = new ViewDayOfferUseCaseImpl(enhancedClient);
     }
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
         UUID dayOfferId = UUID.fromString(apiGatewayProxyRequestEvent.getPathParameters().get("id"));
-        DayOffer dayOfferRetrieved = this.retrieveDayOfferUseCase.findById(dayOfferId);
+        DayOffer dayOfferRetrieved = this.viewDayOfferUseCase.findById(dayOfferId);
         Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .serializeNulls()
