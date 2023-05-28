@@ -17,7 +17,7 @@ Welcome to Super Offers's wiki.
 | :white_check_mark: | done  |
 
 
-**Developing backend lambda functions using SAM CLI (p.s. always remember to activate/deactivate access key admin user on aws console)**
+:clock4: **Developing backend lambda functions using SAM CLI (p.s. always remember to activate/deactivate access key admin user on aws console)**
 * Installing and configuring [1]
 <br> :white_check_mark: -- VS Code
 <br> :white_check_mark: -- AWS CLI
