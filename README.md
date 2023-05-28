@@ -61,14 +61,6 @@ The main features that's application is going to provide are:
 
 - From this source code package, CodeBuild makes the build and tests, both backend (lambda functions) and frontend codes. If the tests will be passed successfully, CloudFormation will create or update the application stack in production environment (S3 for Static Content, API Gateway, Lambda functions, DynamoDB database, and so on).
 
-## Installation
-
-_installation_
-
-## Contributing
-
-You can contribute in several ways to this project, such as: reporting issues like bugs, feature requests; review source code, documentation; make pull requests, fixing bugs, etc.
-
 ## Documentation
 
 The project documentation and artifacts can be found [here](https://github.com/dancodingbr/superoffers/tree/main/docs).
