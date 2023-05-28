@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  superoffes-app
+
+  Sample SAM Template for superoffes-app
+
+Globals:
+  Function:
+    Timeout: 20
+    Runtime: java11
+    Architectures:
+      - x86_64
+    MemorySize: 128
+    Environment: 
+      Variables:
+        JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 
+
+Resources:
+  CreateDayOfferFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: CreateDayOfferFunction
+      Handler: superoffers.CreateDayOfferHandler::handleRequest
+      Events:
+        ApiEvent:
+          Type: HttpApi 
+          Properties:
+            Path: /day-offers
+            Method: post
+
+  RetrieveDayOfferFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: RetrieveDayOfferFunction
+      Handler: superoffers.RetrieveDayOfferHandler::handleRequest
+      Events:
+        ApiEvent:
+          Type: HttpApi 
+          Properties:
+            Path: /day-offers/{id}
+            Method: get
+
+  UpdateDayOfferFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: UpdateDayOfferFunction
+      Handler: superoffers.UpdateDayOfferHandler::handleRequest
+      Events:
+        ApiEvent:
+          Type: HttpApi 
+          Properties:
+            Path: /day-offers
+            Method: put
+
+  DeleteDayOfferFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: DeleteDayOfferFunction
+      Handler: superoffers.DeleteDayOfferHandler::handleRequest
+      Events:
+        ApiEvent:
+          Type: HttpApi 
+          Properties:
+            Path: /day-offers/{id}
+            Method: delete
+
+  RetrieveAllDayOffersFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: RetrieveAllDayOffersFunction
+      Handler: superoffers.RetrieveAllDayOffersHandler::handleRequest
+      Events:
+        ApiEvent:
+          Type: HttpApi 
+          Properties:
+            Path: /day-offers
+            Method: get
+
+Outputs:
+  SuperOffersApi:
+    Description: "API Gateway endpoint URL for Prod stage for handle functions of Day Offers service "
+    Value: !Sub "https://${SuperOffersApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/day-offers/"
+  CreateDayOfferFunction:
+    Description: "CreateDayOffer Lambda Function ARN"
+    Value: !GetAtt CreateDayOfferFunction.Arn
+  RetrieveDayOfferFunction:
+    Description: "RetrieveDayOffer Lambda Function ARN"
+    Value: !GetAtt RetrieveDayOfferFunction.Arn
+  UpdateDayOfferFunction:
+    Description: "UpdateDayOffer Lambda Function ARN"
+    Value: !GetAtt UpdateDayOfferFunction.Arn
+  DeleteDayOfferFunction:
+    Description: "DeleteDayOffer Lambda Function ARN"
+    Value: !GetAtt DeleteDayOfferFunction.Arn
+  RetrieveAllDayOffersFunction:
+    Description: "RetrieveAllDayOffers Lambda Function ARN"
+    Value: !GetAtt RetrieveAllDayOffersFunction.Arn

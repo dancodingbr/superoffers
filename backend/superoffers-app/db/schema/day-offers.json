@@ -1,0 +1,42 @@
+{
+  "TableName": "DayOffers",
+  "KeySchema": [
+    { "AttributeName": "id", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "id", "AttributeType": "S" },
+    { "AttributeName": "productName", "AttributeType": "S" },
+    { "AttributeName": "supermarketName", "AttributeType": "S" }
+  ],
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "productName-index",
+      "KeySchema": [
+        {
+          "AttributeName": "productName",
+          "KeyType": "HASH"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      }
+    },
+    {
+      "IndexName": "supermarketName-index",
+      "KeySchema": [
+        {
+          "AttributeName": "supermarketName",
+          "KeyType": "HASH"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      }
+    }
+  ],  
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  },
+  "BillingMode": "PAY_PER_REQUEST"
+}
