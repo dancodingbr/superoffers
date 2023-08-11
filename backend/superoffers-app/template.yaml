@@ -17,6 +17,18 @@ Globals:
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 
 
 Resources:
+
+  core:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      LayerName: core
+      Description: Core dependency for the lambda functions.
+      Content:
+        S3Bucket: superoffers-bucket-6892856378583473745
+        S3Key: core.zip
+      CompatibleRuntimes:
+        - java11      
+
   CreateDayOfferFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -28,6 +40,8 @@ Resources:
           Properties:
             Path: /day-offers
             Method: post
+      Layers:
+        - !Ref core
 
   RetrieveDayOfferFunction:
     Type: AWS::Serverless::Function 
