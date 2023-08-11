@@ -23,20 +23,20 @@ import java.time.Instant;
 public class CreateDayOfferHandler
     implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-      private CreateDayOfferUseCase createDayOfferUseCase = null;
-      private ViewDayOfferUseCase viewDayOfferUseCase = null;
+  private CreateDayOfferUseCase createDayOfferUseCase = null;
+  private ViewDayOfferUseCase viewDayOfferUseCase = null;
   
-      public CreateDayOfferHandler() {
-          DynamoDbClient ddb = DynamoDbClient.builder()
-                  .region(Region.US_EAST_1)
-                  .endpointOverride(URI.create("http://localhost:8000"))
-                  .build();
-          DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
-                  .dynamoDbClient(ddb)
-                  .build();
-          createDayOfferUseCase = new CreateDayOfferUseCaseImpl(enhancedClient);
-          viewDayOfferUseCase = new ViewDayOfferUseCaseImpl(enhancedClient);
-      }
+  public CreateDayOfferHandler() {
+      DynamoDbClient ddb = DynamoDbClient.builder()
+              .region(Region.US_EAST_1)
+              .endpointOverride(URI.create("http://localhost:8000"))
+              .build();
+      DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+              .dynamoDbClient(ddb)
+              .build();
+      createDayOfferUseCase = new CreateDayOfferUseCaseImpl(enhancedClient);
+      viewDayOfferUseCase = new ViewDayOfferUseCaseImpl(enhancedClient);
+  }
   
   @Override
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
